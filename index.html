@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Jan Lönnqvist / Senior Multimedia Designer / Pleo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --dark: #1a1a2e;
+            --darker: #0f0f1e;
+            --pink: #e8627c;
+            --pink-light: #ffc8d0;
+            --pink-soft: rgba(232, 98, 124, 0.08);
+            --green: #6abe84;
+            --green-dark: #2c8354;
+            --green-soft: rgba(106, 190, 132, 0.08);
+            --white: #ffffff;
+            --gray-100: #f5f5f7;
+            --gray-200: #e8e8ec;
+            --gray-400: #9d9daa;
+            --gray-600: #6b6b78;
+            --text: #222233;
+        }
+
+        html { overflow-x: hidden; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--darker);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ====== PROGRESS BAR ====== */
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink), var(--green));
+            z-index: 10000;
+            width: 0%;
+            transition: none;
+        }
+
+        /* ====== NAV ====== */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 48px;
+            mix-blend-mode: difference;
+        }
+
+        nav .logo {
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--white);
+        }
+
+        nav .nav-right {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--white);
+            opacity: 0.5;
+        }
+
+        /* ====== PANELS (vertical scroll) ====== */
+
+        /* --- PANEL 1: HERO --- */
+        .panel-hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--darker);
+        }
+
+        .hero-layers {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+        }
+
+        .hero-layer {
+            position: absolute;
+            will-change: transform;
+        }
+
+        /* Large gradient orbs */
+        .hl-orb1 {
+            width: 700px; height: 700px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(232,98,124,0.15) 0%, transparent 70%);
+            top: -20%; right: -15%;
+        }
+
+        .hl-orb2 {
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(106,190,132,0.12) 0%, transparent 70%);
+            bottom: -15%; left: -10%;
+        }
+
+        .hl-orb3 {
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(232,98,124,0.08) 0%, transparent 70%);
+            top: 50%; left: 50%;
+        }
+
+        /* Grid lines */
+        .hero-grid {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 48px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--pink);
+            border: 1px solid rgba(232,98,124,0.25);
+            padding: 8px 20px;
+            border-radius: 100px;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.2s ease both;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 7vw, 6rem);
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
+
+        .hero-title .line2 {
+            display: block;
+            background: linear-gradient(135deg, var(--pink), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            margin-top: 24px;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--gray-400);
+            line-height: 1.7;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeUp 0.8s 0.4s ease both;
+        }
+
+        .hero-scroll-cue {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.55rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            opacity: 0;
+            animation: fadeUp 0.8s 0.6s ease both;
+        }
+
+        .hero-scroll-cue::after {
+            content: '';
+            display: block;
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--gray-600), transparent);
+            margin: 10px auto 0;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- PANEL: HORIZONTAL SCROLL SECTION --- */
+        .horizontal-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .horizontal-track {
+            display: flex;
+            will-change: transform;
+        }
+
+        .h-slide {
+            min-width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 80px;
+            flex-shrink: 0;
+        }
+
+        /* Slide 1: About */
+        .slide-about {
+            background: var(--dark);
+        }
+
+        .slide-about .sa-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1100px;
+            align-items: center;
+        }
+
+        .sa-left .sa-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 20px;
+        }
+
+        .sa-left h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+
+        .sa-left p {
+            font-size: 0.92rem;
+            line-height: 1.8;
+            color: var(--gray-400);
+        }
+
+        .sa-left p strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .sa-right {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .stat-block {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 28px 22px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .stat-block:hover {
+            background: rgba(255,255,255,0.06);
+            transform: translateY(-4px);
+        }
+
+        .stat-block .sb-num {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stat-block:nth-child(odd) .sb-num { color: var(--pink); }
+        .stat-block:nth-child(even) .sb-num { color: var(--green); }
+
+        .stat-block .sb-label {
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+        }
+
+        /* Slide 2: Skills */
+        .slide-skills {
+            background: var(--white);
+            color: var(--text);
+        }
+
+        .slide-skills .ss-inner {
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        .ss-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 20px;
+        }
+
+        .ss-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 40px;
+        }
+
+        .skill-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .skill-row {
+            display: grid;
+            grid-template-columns: 200px 1fr 100px;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            transition: all 0.3s;
+        }
+
+        .skill-row:hover {
+            padding-left: 12px;
+        }
+
+        .skill-row:last-child { border-bottom: none; }
+
+        .sr-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .sr-detail {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            line-height: 1.5;
+        }
+
+        .sr-bar {
+            height: 4px;
+            background: var(--gray-200);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .sr-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--pink), var(--green));
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sr-bar-fill.animated { width: var(--fill); }
+
+        /* Slide 3: DHL Case */
+        .slide-case {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e1e35 100%);
+        }
+
+        .slide-case .sc-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1100px;
+            align-items: start;
+        }
+
+        .sc-left .sc-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 20px;
+        }
+
+        .sc-left h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+
+        .sc-left p {
+            font-size: 0.88rem;
+            line-height: 1.8;
+            color: var(--gray-400);
+        }
+
+        .sc-left p strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .sc-right {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .case-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .case-card:hover {
+            background: rgba(255,255,255,0.07);
+            transform: translateX(6px);
+        }
+
+        .case-card h4 {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--green);
+            margin-bottom: 6px;
+        }
+
+        .case-card p {
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--gray-400);
+        }
+
+        .case-card p strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .sc-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .sc-stat .scs-num {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--pink), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .sc-stat .scs-label {
+            font-size: 0.55rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+
+        /* --- PANEL: EXPERIENCE (vertical) --- */
+        .panel-experience {
+            background: var(--white);
+            color: var(--text);
+            padding: 120px 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pe-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pe-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--pink);
+            margin-bottom: 20px;
+        }
+
+        .pe-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 48px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 48px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--pink), var(--green), transparent);
+        }
+
+        .tl-item {
+            position: relative;
+            padding-bottom: 40px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tl-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -44px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--pink);
+            border: 3px solid var(--white);
+            box-shadow: 0 0 0 2px var(--pink);
+        }
+
+        .tl-item:nth-child(even)::before {
+            background: var(--green);
+            box-shadow: 0 0 0 2px var(--green);
+        }
+
+        .tl-company {
+            font-size: 0.85rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .tl-role {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 8px;
+        }
+
+        .tl-desc {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+        }
+
+        /* Toolkit section */
+        .toolkit-section {
+            margin-top: 64px;
+        }
+
+        .tk-label {
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--green-dark);
+            margin-bottom: 20px;
+        }
+
+        .tk-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tk-chip {
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 10px 20px;
+            border-radius: 100px;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            transition: all 0.3s;
+        }
+
+        .tk-chip:hover {
+            background: var(--text);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .tk-chip.primary {
+            background: var(--text);
+            color: var(--white);
+        }
+
+        .tk-chip.primary:hover {
+            background: var(--pink);
+        }
+
+        /* --- PANEL: CTA --- */
+        .panel-cta {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--darker);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 80px 48px;
+        }
+
+        .cta-orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .cta-orb1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(232,98,124,0.1) 0%, transparent 70%);
+            top: -30%; left: -10%;
+        }
+
+        .cta-orb2 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(106,190,132,0.08) 0%, transparent 70%);
+            bottom: -20%; right: -5%;
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 12px;
+        }
+
+        .cta-title span {
+            background: linear-gradient(135deg, var(--pink), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-sub {
+            font-size: 0.7rem;
+            color: var(--gray-600);
+            letter-spacing: 0.06em;
+            margin-bottom: 36px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .cta-buttons a {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 100px;
+            transition: all 0.3s;
+        }
+
+        .cta-buttons a.filled {
+            background: linear-gradient(135deg, var(--pink), var(--green));
+            color: var(--white);
+            border: none;
+        }
+
+        .cta-buttons a.filled:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(232,98,124,0.25);
+        }
+
+        .cta-buttons a.outline {
+            border: 1.5px solid rgba(255,255,255,0.15);
+            color: var(--white);
+        }
+
+        .cta-buttons a.outline:hover {
+            border-color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 24px 0;
+            text-align: center;
+            font-size: 0.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            background: var(--darker);
+        }
+
+        /* ====== PARALLAX FLOATING ELEMENTS ====== */
+        .parallax-layer {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            mix-blend-mode: screen;
+        }
+
+        .p-el {
+            position: absolute;
+            will-change: transform;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .p-el.active { opacity: 1; }
+
+        .p-el.dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+        }
+
+        .p-el.line {
+            height: 1px;
+            border-radius: 1px;
+        }
+
+        .p-el.ring {
+            border-radius: 50%;
+            border: 1.5px solid;
+            background: transparent;
+        }
+
+        .p-el.rect {
+            border-radius: 4px;
+        }
+
+        /* ====== RESPONSIVE ====== */
+        @media (max-width: 900px) {
+            .h-slide { padding: 60px 24px; }
+            .slide-about .sa-inner { grid-template-columns: 1fr; gap: 40px; }
+            .slide-case .sc-inner { grid-template-columns: 1fr; gap: 40px; }
+            .skill-row { grid-template-columns: 120px 1fr 60px; }
+            .horizontal-wrap { display: none; }
+            .mobile-fallback { display: block !important; }
+            .panel-experience { padding: 80px 24px; }
+            .sc-stats { flex-direction: column; gap: 16px; }
+        }
+
+        .mobile-fallback { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ====== PARALLAX FLOATING PARTICLES ====== -->
+<div class="parallax-layer" id="parallaxLayer"></div>
+
+<nav>
+    <div class="logo">Jan Lönnqvist</div>
+    <div class="nav-right">Senior Multimedia Designer / Pleo</div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="panel-hero">
+    <div class="hero-layers">
+        <div class="hero-grid"></div>
+        <div class="hero-layer hl-orb1" data-pspeed="0.03"></div>
+        <div class="hero-layer hl-orb2" data-pspeed="0.05"></div>
+        <div class="hero-layer hl-orb3" data-pspeed="0.04"></div>
+    </div>
+    <div class="hero-content">
+        <div class="hero-tag">Application / Senior Multimedia Designer</div>
+        <h1 class="hero-title">
+            Full-Stack
+            <span class="line2">Creator.</span>
+        </h1>
+        <p class="hero-sub">10+ years designing, producing, and shipping creative across every channel. From offset print to motion design to performance ads. I own the process end to end.</p>
+    </div>
+    <div class="hero-scroll-cue">Scroll</div>
+</section>
+
+<!-- ====== HORIZONTAL SCROLL SECTION ====== -->
+<div class="horizontal-wrap" id="horizontalWrap">
+    <div class="horizontal-track" id="horizontalTrack">
+
+        <!-- Slide 1: About -->
+        <div class="h-slide slide-about">
+            <div class="sa-inner">
+                <div class="sa-left">
+                    <div class="sa-label">Why Me</div>
+                    <h2>Design to delivery, no handoff needed.</h2>
+                    <p>Pleo is looking for a "full-stack creator" who can jump between softwares, think strategically, and own post-production. That's how I've worked my entire career. I design it, I animate it, I produce it, I ship it. <strong>From Photoshop to After Effects to the ad platform.</strong></p>
+                </div>
+                <div class="sa-right">
+                    <div class="stat-block">
+                        <div class="sb-num">10+</div>
+                        <div class="sb-label">Years in creative</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="sb-num">40</div>
+                        <div class="sb-label">Countries at GLS</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="sb-num">5+</div>
+                        <div class="sb-label">Channels produced for</div>
+                    </div>
+                    <div class="stat-block">
+                        <div class="sb-num">3</div>
+                        <div class="sb-label">Teams led</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Skills Match -->
+        <div class="h-slide slide-skills">
+            <div class="ss-inner">
+                <div class="ss-label">Skills Match / Your Requirements</div>
+                <div class="ss-title">What I bring to Pleo.</div>
+                <div class="skill-rows">
+                    <div class="skill-row">
+                        <div class="sr-name">Adobe CC</div>
+                        <div class="sr-detail">Photoshop, Illustrator, InDesign, After Effects, Premiere Pro. Daily use since education.</div>
+                        <div class="sr-bar"><div class="sr-bar-fill" style="--fill: 95%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="sr-name">Figma</div>
+                        <div class="sr-detail">UI/UX, prototyping, design systems. Used at GLS and HelloFresh.</div>
+                        <div class="sr-bar"><div class="sr-bar-fill" style="--fill: 88%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="sr-name">Motion Design</div>
+                        <div class="sr-detail">After Effects, Premiere. Social ads, campaign animations, explainers. Full DHL campaign in motion.</div>
+                        <div class="sr-bar"><div class="sr-bar-fill" style="--fill: 85%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="sr-name">Performance Ads</div>
+                        <div class="sr-detail">Created paid social across LinkedIn, Instagram, TikTok, Indeed, YouTube. Data-driven variations.</div>
+                        <div class="sr-bar"><div class="sr-bar-fill" style="--fill: 82%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="sr-name">Brand Systems</div>
+                        <div class="sr-detail">Owned Rituals brand book. Built and maintained design systems at GLS across 40 markets.</div>
+                        <div class="sr-bar"><div class="sr-bar-fill" style="--fill: 90%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="sr-name">AI Tools</div>
+                        <div class="sr-detail">Midjourney, Sora, Veo3, Runway. Using AI in production workflows.</div>
+                        <div class="sr-bar"><div class="sr-bar-fill" style="--fill: 75%"></div></div>
+                    </div>
+                    <div class="skill-row">
+                        <div class="sr-name">Team Leadership</div>
+                        <div class="sr-detail">Led design teams at HelloFresh (3 designers), managed DHL account. Brief, present, feedback.</div>
+                        <div class="sr-bar"><div class="sr-bar-fill" style="--fill: 85%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: DHL Case -->
+        <div class="h-slide slide-case">
+            <div class="sc-inner">
+                <div class="sc-left">
+                    <div class="sc-label">Case Study / Design to Production</div>
+                    <h2>DHL Supply Chain Recruitment</h2>
+                    <p>
+                        <strong>Lead Designer at agency level.</strong> DHL needed to recruit team leaders and shift leaders across 20+ cities in the Netherlands and Belgium. I owned the full creative process, from data analysis to final deliverables across every paid social channel.
+                    </p>
+                    <div class="sc-stats">
+                        <div class="sc-stat">
+                            <div class="scs-num">20%</div>
+                            <div class="scs-label">Of leads in month one</div>
+                        </div>
+                        <div class="sc-stat">
+                            <div class="scs-num">20+</div>
+                            <div class="scs-label">Cities targeted</div>
+                        </div>
+                        <div class="sc-stat">
+                            <div class="scs-num">5</div>
+                            <div class="scs-label">Channels</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sc-right">
+                    <div class="case-card">
+                        <h4>Data-Driven Personas</h4>
+                        <p>Created <strong>targeted personas</strong> from DHL's data. Different people in visuals per city and target group. Each location got its own localized creative.</p>
+                    </div>
+                    <div class="case-card">
+                        <h4>Full Production</h4>
+                        <p>Produced <strong>all animations and stills</strong> for LinkedIn, Instagram, TikTok, and Indeed. End-to-end from concept to ad-ready deliverable.</p>
+                    </div>
+                    <div class="case-card">
+                        <h4>Results</h4>
+                        <p>Campaign performed so well that <strong>DHL ordered more work</strong>. Data to design, design to production, production to measurable results.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ====== MOBILE FALLBACK (hidden on desktop) ====== -->
+<div class="mobile-fallback">
+    <!-- content rendered in horizontal scroll on desktop -->
+</div>
+
+<!-- ====== EXPERIENCE (vertical scroll) ====== -->
+<section class="panel-experience">
+    <div class="pe-inner">
+        <div class="pe-label">Experience</div>
+        <div class="pe-title">Career</div>
+
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-company">GLS Group</div>
+                <div class="tl-role">Designer</div>
+                <div class="tl-desc">Group-level creative across 40 countries. Campaign design, print production, vendor management, presentations, expo, UI/UX. Foil stamping and specialty print projects.</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-company">DHL (Agency)</div>
+                <div class="tl-role">Lead Designer (Agency)</div>
+                <div class="tl-desc">Recruitment campaign across 20+ cities. Data-driven persona design, localized visuals, animations and stills for all social channels. Client reordered.</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-company">Rituals Cosmetics</div>
+                <div class="tl-role">Lead Graphic Designer</div>
+                <div class="tl-desc">Campaign design, POS materials, package design. Brand book owner. Hammam campaign (highest sales in the product's history).</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-company">HelloFresh</div>
+                <div class="tl-role">Team Lead, Graphic Design</div>
+                <div class="tl-desc">Led team of 3. Recipe cards, brand collabs, multi-brand design across multiple markets.</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-company">IKEA</div>
+                <div class="tl-role">Art Direction / Photography</div>
+                <div class="tl-desc">Campaign design and production for sustainability project.</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-company">UPM</div>
+                <div class="tl-role">Designer</div>
+                <div class="tl-desc">Package design and print materials for Finnish forest industry company.</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-company">Agencies & Print</div>
+                <div class="tl-role">Various Roles</div>
+                <div class="tl-desc">Lönnberg, Cocomms, Pixmill, Planex, Valve, Multiprint. Print production, editorial, packaging. Hands-on offset and digital print.</div>
+            </div>
+        </div>
+
+        <div class="toolkit-section">
+            <div class="tk-label">Toolkit</div>
+            <div class="tk-grid">
+                <span class="tk-chip primary">Photoshop</span>
+                <span class="tk-chip primary">Illustrator</span>
+                <span class="tk-chip primary">After Effects</span>
+                <span class="tk-chip primary">Figma</span>
+                <span class="tk-chip">InDesign</span>
+                <span class="tk-chip">Premiere Pro</span>
+                <span class="tk-chip">Midjourney</span>
+                <span class="tk-chip">Sora</span>
+                <span class="tk-chip">Veo3</span>
+                <span class="tk-chip">Runway</span>
+            </div>
+        </div>
+
+        <div class="toolkit-section">
+            <div class="tk-label">Education</div>
+            <div class="tl-item visible" style="padding-left: 0;">
+                <div class="tl-company">Heltech, Käpylä</div>
+                <div class="tl-role">Helsinki, Finland</div>
+                <div class="tl-desc">Graphic Design and Print Media.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ====== CTA ====== -->
+<section class="panel-cta">
+    <div class="cta-orb cta-orb1"></div>
+    <div class="cta-orb cta-orb2"></div>
+    <div class="cta-inner">
+        <h2 class="cta-title">Let's make <span>great work.</span></h2>
+        <div class="cta-sub">Senior Multimedia Designer / Pleo / Amsterdam</div>
+        <div class="cta-buttons">
+            <a href="mailto:jan.lonnqvist@windowslive.com" class="filled">Email Me</a>
+            <a href="tel:+31619584748" class="outline">+31 619 584 748</a>
+        </div>
+    </div>
+</section>
+
+<footer>Jan Lönnqvist / Helsinki &middot; Amsterdam / 2026</footer>
+
+<script>
+    // ====== Progress Bar ======
+    const progressBar = document.getElementById('progressBar');
+
+    // ====== Horizontal Scroll ======
+    const wrap = document.getElementById('horizontalWrap');
+    const track = document.getElementById('horizontalTrack');
+    let slides, totalWidth, wrapHeight;
+
+    function setupHorizontal() {
+        if (!wrap || !track) return;
+        slides = track.querySelectorAll('.h-slide');
+        totalWidth = 0;
+        slides.forEach(s => totalWidth += s.offsetWidth);
+        wrapHeight = totalWidth - window.innerWidth + window.innerHeight;
+        wrap.style.height = wrapHeight + 'px';
+    }
+
+    setupHorizontal();
+    window.addEventListener('resize', setupHorizontal);
+
+    // ====== Parallax Particles ======
+    const parallaxLayer = document.getElementById('parallaxLayer');
+    const particles = [];
+    const colors = ['rgba(232,98,124,0.3)', 'rgba(106,190,132,0.25)', 'rgba(255,200,208,0.2)', 'rgba(255,255,255,0.1)'];
+    const types = ['dot', 'line', 'ring', 'rect'];
+
+    for (let i = 0; i < 40; i++) {
+        const el = document.createElement('div');
+        const type = types[Math.floor(Math.random() * types.length)];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        el.classList.add('p-el', type);
+
+        const size = 4 + Math.random() * 20;
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        const speed = 0.2 + Math.random() * 0.8;
+        const rotSpeed = (Math.random() - 0.5) * 0.5;
+
+        if (type === 'dot') {
+            el.style.background = color;
+            el.style.width = size * 0.4 + 'px';
+            el.style.height = size * 0.4 + 'px';
+        } else if (type === 'line') {
+            el.style.background = color;
+            el.style.width = size * 3 + 'px';
+            el.style.height = '1.5px';
+        } else if (type === 'ring') {
+            el.style.borderColor = color;
+            el.style.width = size + 'px';
+            el.style.height = size + 'px';
+        } else {
+            el.style.background = color;
+            el.style.width = size * 0.8 + 'px';
+            el.style.height = size * 0.5 + 'px';
+        }
+
+        el.style.left = x + '%';
+        el.style.top = y + '%';
+
+        parallaxLayer.appendChild(el);
+        particles.push({ el, x, y, speed, rotSpeed, rot: 0 });
+    }
+
+    // ====== Animation Loop ======
+    let scrollY = 0;
+    let currentY = 0;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function tick() {
+        currentY = lerp(currentY, scrollY, 0.07);
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? currentY / docHeight : 0;
+
+        // Progress bar
+        progressBar.style.width = (progress * 100) + '%';
+
+        // Horizontal scroll
+        if (wrap && track && wrapHeight > 0) {
+            const wrapTop = wrap.offsetTop;
+            const scrollInWrap = currentY - wrapTop;
+            const maxScroll = wrapHeight - window.innerHeight;
+            const ratio = Math.max(0, Math.min(1, scrollInWrap / maxScroll));
+            const translateX = ratio * (totalWidth - window.innerWidth);
+            track.style.position = (scrollInWrap >= 0 && scrollInWrap <= maxScroll) ? 'fixed' : '';
+            track.style.top = (scrollInWrap >= 0 && scrollInWrap <= maxScroll) ? '0' : '';
+
+            if (scrollInWrap < 0) {
+                track.style.position = 'relative';
+                track.style.transform = 'translateX(0)';
+            } else if (scrollInWrap > maxScroll) {
+                track.style.position = 'relative';
+                track.style.transform = `translateX(-${totalWidth - window.innerWidth}px)`;
+                track.style.top = maxScroll + 'px';
+            } else {
+                track.style.transform = `translateX(-${translateX}px)`;
+            }
+
+            // Animate skill bars when slide-skills visible
+            if (ratio > 0.25 && ratio < 0.65) {
+                document.querySelectorAll('.sr-bar-fill').forEach(b => b.classList.add('animated'));
+            }
+        }
+
+        // Hero parallax layers
+        document.querySelectorAll('.hero-layer').forEach(layer => {
+            const speed = parseFloat(layer.dataset.pspeed || 0);
+            layer.style.transform = `translate3d(0, ${currentY * speed * -50}px, 0)`;
+        });
+
+        // Floating particles parallax
+        particles.forEach(p => {
+            const yOff = currentY * p.speed * -0.15;
+            p.rot += p.rotSpeed;
+            p.el.style.transform = `translate3d(0, ${yOff}px, 0) rotate(${p.rot}deg)`;
+            if (progress > 0.02) {
+                p.el.classList.add('active');
+            }
+        });
+
+        requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('scroll', () => { scrollY = window.scrollY; });
+    tick();
+
+    // ====== Timeline Reveal ======
+    const tlObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.tl-item').forEach(el => tlObserver.observe(el));
+</script>
+
+</body>
+</html>
